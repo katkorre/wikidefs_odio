@@ -1,9 +1,11 @@
-# import necessary libraries
 import xml.sax
 import subprocess
 import mwparserfromhell
 import re
 import os
+
+path = '/home/akorre/wikidefs/gr'
+data_path = r"/home/mmartinelli/project/corpora/wikidumps/enwiki-20210720-pages-articles-multistream.xml.bz2"
 
 # Function where ContentHandler looks for opening and closing tags title and text 
 # and adds characters enclosed within them to the buffer
@@ -19,6 +21,10 @@ class WikiXmlHandler(xml.sax.handler.ContentHandler):
         self._pages = []
         self._counter = 0
         self._flag = True
+        self._categories =  ["Κατηγορία:Εκφοβισμός","Κατηγορία:Λογοκρισία", "Κατηγορία:Εγκλήματα μίσους", 
+              "Κατηγορία:Πολιτική ορθότητα", "Κατηγορία:Παρενόχληση", "Κατηγορία:Ψυχολογική κακοποιήση", 
+              "Κατηγορία:Επιθετική συμπεριφορά", "Κατηγορία:Κακοποίηση", "Κατηγορία:Διαδικτυακός εκφοβισμός"]
+
 
     def characters(self, content):
         """Characters between opening and closing tags"""
@@ -44,10 +50,28 @@ class WikiXmlHandler(xml.sax.handler.ContentHandler):
 
         if name == 'page':
             self._flag = True
-            self._pages.append((self._values['title'], self._values['id'], self._values['text']))
+            self.dish_parser(self._values['title'], self._values['id'], self._values['text'])
+            #self._pages.append((self._values['title'], self._values['id'], self._values['text']))
             #print(self._pages[-1])
-           data_path = r"/home/jupyter-katerina/DEFS/Greek/elwiki-20220301-pages-articles-multistream.xml.bz2"
+    def dish_parser(self, title, myid, text):
+        texts = []
+        if any(cat in text for cat in self._categories):
+            texts.append(text)
+            #titles = [x[0] for x in texts]
+            parsed = mwparserfromhell.parse(text).strip_code().strip()         
+            parsed = re.sub(r"(== See also == | ==See also== )\n *(.)*", "", parsed, flags=re.DOTALL)
+            parsed = re.sub(r"<[^>]+>", "", parsed)
+            parsed = re.sub(r"(  )*", "", parsed)
+            parsed = "\n".join([title, parsed])
+            #parsed = ["\n".join(x) for x in zip(titles, parsed)]
+            
+            ids = myid
+            article = parsed
+            file = '{}.txt'.format(ids)
+            with open(os.path.join(path, file), 'w') as f:
+                f.write('{}'.format(article))
 
+    
 # Object for handling xml
 handler = WikiXmlHandler()
 
@@ -55,7 +79,6 @@ handler = WikiXmlHandler()
 parser = xml.sax.make_parser()
 parser.setContentHandler(handler)
 
-#lst = []
 
 counter = 0
 
@@ -64,65 +87,8 @@ for i, line in enumerate(subprocess.Popen(['bzcat'], stdin = open(data_path), st
     
     parser.feed(line)
     
-    #if len(handler._pages) > 70000:
-    #    break
+#    if len(handler._pages) > 70000:
+#        break
     counter += 1
-    if counter % 10000 == 0:
+    if counter % 100000 == 0:
         print("Current loop:", counter)
- # Append all articles that have the strings defined in categories in list 
-# the list has tuples with [0] being the title and [1] being the text
-
-wikified_defs = []
-categories = ["Κατηγορία:Εκφοβισμός","Κατηγορία:Λογοκρισία", "Κατηγορία:Εγκλήματα μίσους", 
-              "Κατηγορία:Πολιτική ορθότητα", "Κατηγορία:Παρενόχληση", "Κατηγορία:Ψυχολογική κακοποιήση", 
-              "Κατηγορία:Επιθετική συμπεριφορά", "Κατηγορία:Κακοποίηση", "Κατηγορία:Διαδικτυακός εκφοβισμός"]
-
-#categories = ["Categoria:Cucina per tipo di pietanze"]
-for x in handler._pages:
-    if any(cat in x[2] for cat in categories):
-        wikified_defs.append(x)
-    else:
-        pass
-print(len(wikified_defs))
-print(wikified_defs[1])
-
-# Create title list and append only titles (element 0 of tuples in wikified_dishes)
-
-title_lst = [el[0] for el in wikified_defs]
-
-# Create id list and append only ids (el 1 of tuples in wikified_dishes)
-
-id_lst = [el[1] for el in wikified_defs]
-
-# Create text list and append only texts (element 2 of tuples in wikified_dishes)
-
-text_lst = [el[2] for el in wikified_defs]
-# Parse text list
-
-text_lst = [mwparserfromhell.parse(text) for text in text_lst]
-
-# Clean texts
-
-text_lst = [text.strip_code().strip() for text in text_lst]
-
-# Clean texts from 'Note' until the end and other undeleted tags with regex
-
-clean_text_lst = [re.sub(r"(== Note == | ==Note== )\n *(.)*", "", el, flags=re.DOTALL) for el in text_lst]
-clean_text_lst = [re.sub(r"( < ref > | < /ref > )", "", el) for el in clean_text_lst]
-clean_text_lst = [re.sub(r"<[^>]+>", "", el) for el in clean_text_lst]
-# Join title and text
-
-wiki = ['\n'.join(x) for x in zip(title_lst, clean_text_lst)]
-# Write texts in txt files with id as title
-
-path = '/home/jupyter-katerina/DEFS/Greek/gr_texts'
-
-for el, article in zip(wikified_defs, wiki):
-    ids = el[1]
-    article = article
-    file = f'{ids}.txt'
-    if not any(ban in el[0] for ban in ["/", "Categoria:"]): 
-        with open(os.path.join(path, file), 'w+') as f:
-            f.write(f'{article}')
-
-#print(os.listdir(path))
