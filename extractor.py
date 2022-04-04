@@ -10,7 +10,7 @@ from operator import itemgetter
 #choose a path to get a file
 path_to_text = input("Enter the path to the text:\n")
 
-splitter = SentenceSplitter(language='it')
+splitter = SentenceSplitter(language='el')
 #open file, sentencize and create list of sentences
 with open(path_to_text, 'r') as f:
     f = f.read()
@@ -18,7 +18,7 @@ with open(path_to_text, 'r') as f:
 
 checkpoint = 'bert-base-multilingual-cased'
 tokenizer = AutoTokenizer.from_pretrained(checkpoint)
-model = AutoModelForSequenceClassification.from_pretrained('/home/mmartinelli/huggingface/saved_model_IT/')
+model = AutoModelForSequenceClassification.from_pretrained('/home/akorre/huggingfacee/saved_model_IT/')
 
 pipe = TextClassificationPipeline(model=model, tokenizer=tokenizer, return_all_scores=True)
 
