@@ -5,7 +5,7 @@ import re
 import os
 
 path = '/home/akorre/wikidefs/gr'
-data_path = r"/home/akorre/project/corpora/wikidumps/elwiki-20220301-pages-articles-multistream.xml.bz2"
+data_path = r"/home/akorre/wikidefs/gr/elwiki-20220401-pages-articles-multistream-index.txt.bz2"
 
 # Function where ContentHandler looks for opening and closing tags title and text 
 # and adds characters enclosed within them to the buffer
