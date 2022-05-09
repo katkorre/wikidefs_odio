@@ -42,7 +42,7 @@ class WikiXmlHandler(xml.sax.handler.ContentHandler):
 
             else:
                 self._categories = [
-                    "Category:Censorship", "Category:Hate speech
+                    "Category:Censorship", "Category:Hate speech"
                 ]
 
     # def reset_default_values(self):
