@@ -5,8 +5,8 @@ import re
 import os
 import argparse
 
-# PATH = '/home/mmartinelli/persistent/en-wiki-food'
-# data_path = r"/home/mmartinelli/project/corpora/wikidumps/enwiki-20210720-pages-articles-multistream.xml.bz2"
+PATH = '/home/akorre/wiki_files/it'
+data_path = r"/storage/corpora/wikipedia/it"
 # /home/corpora/wikipedia/en
 # Function where ContentHandler looks for opening and closing tags title and text
 # and adds characters enclosed within them to the buffer
@@ -37,34 +37,12 @@ class WikiXmlHandler(xml.sax.handler.ContentHandler):
         else:
             if self._language == "it":
                 self.categories = [
-                    "Categoria:Antipasti", "Categoria:Contorni",
-                    "Categoria:Dolci", "Categoria:Piatti",
-                    "Categoria:Primi piatti", "Categoria:Secondi piatti"
-                ]
+                    "Categoria:Reati contro la persona", "Categoria:Discorsi",
+                      ]
 
             else:
                 self._categories = [
-                    "Category:Italian cuisine", "Category:Cuisine of Abruzzo",
-                    "Category:Cuisine of Apulia", "Category:Cuisine of Basilicata",
-                    "Category:Cuisine of Calabria", "Category:Cuisine of Campania",
-                    "Category:Cuisine of Emilia-Romagna", "Category:Cuisine of Lazio",
-                    "Category:Cuisine of Liguria", "Category:Cuisine of Lombardy",
-                    "Category:Cuisine of Marche", "Category:Cuisine of Molise",
-                    "Category:Cuisine of Piedmond", "Category:Cuisine of Sardinia",
-                    "Category:Cuisine of Sicily", "Category:Cuisine of South Tyrol",
-                    "Category:Cuisine of Tuscany", "Category:Cuisine of Umbria",
-                    "Category:Cuisine of Veneto", "Category:Cuisine of Aosta Valley",
-                    "Category:Dairy dishes", "Category:Egg dishes",
-                    "Category:Flower dishes", "Category:Fruit dishes",
-                    "Category:Ginger dishes", "Category:Grain dishes",
-                    "Category:Meat dishes", "Category:Mushroom dishes",
-                    "Category:Noodle dishes", "Category:Nut dishes",
-                    "Category:Pasta dishes", "Category:Tofu dishes",
-                    "Category:Tuber dishes", "Category:Vegetable dishes",
-                    "Category:Spaghetti dishes", "Category:Neapolitan cuisine",
-                    "Category:Potato dishes", "Category:Fish dishes",
-                    "Category:Italian desserts", "Category:Appetizers",
-                    "Category:Desserts"
+                    "Category:Censorship", "Category:Hate speech
                 ]
 
     # def reset_default_values(self):
