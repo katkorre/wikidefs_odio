@@ -77,7 +77,7 @@ for i, line in enumerate(subprocess.Popen(['bzcat'], stdin = open(data_path), st
 # the list has tuples with [0] being the title and [1] being the text
 
 wikified_dishes = []
-categories = ["Categoria:Reati contro la persona","Categoria:Scienze sociali", "Categoria:Discorsi"] 
+categories = ["Category:Hate speech","Category:Censorship", "Category:Harassment"] 
              # "Κατηγορία:Πολιτική ορθότητα", "Κατηγορία:Παρενόχληση", "Κατηγορία:Ψυχολογική κακοποιήση", 
               #"Κατηγορία:Επιθετική συμπεριφορά", "Κατηγορία:Κακοποίηση", "Κατηγορία:Διαδικτυακός εκφοβισμός"]
 
