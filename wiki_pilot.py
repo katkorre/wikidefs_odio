@@ -46,7 +46,7 @@ class WikiXmlHandler(xml.sax.handler.ContentHandler):
             self._pages.append((self._values['title'], self._values['id'], self._values['text']))
             #print(self._pages[-1])
 
- data_path = r"/storage/corpora/wikipedia/el/elwiki-20220301-pages-articles-multistream.xml.bz2"
+data_path = r"/storage/corpora/wikipedia/el/elwiki-20220301-pages-articles-multistream.xml.bz2"
 # Object for handling xml
 handler = WikiXmlHandler()
 
