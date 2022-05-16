@@ -5,8 +5,8 @@ import re
 import os
 import argparse
 
-PATH = '/home/akorre/wiki_files/el'
-data_path = r"/storage/corpora/wikipedia/el/elwiki-20220401-pages-articles-multistream.xml.bz2"
+PATH = '/home/akorre/wiki_files/it'
+data_path = r"/storage/corpora/wikipedia/it/itwiki-20220420-pages-articles-multistream.xml.bz2"
 # PATH = '/home/mmartinelli/persistent/en-wiki-food'
 # data_path = r"/home/mmartinelli/project/corpora/wikidumps/enwiki-20210720-pages-articles-multistream.xml.bz2"
 # /home/corpora/wikipedia/en
