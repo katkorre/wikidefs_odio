@@ -118,7 +118,7 @@ clean_text_lst = [re.sub(r"<[^>]+>", "", el) for el in clean_text_lst]
 wiki = ['\n'.join(x) for x in zip(title_lst, clean_text_lst)]
 # Write texts in txt files with id as title
 
-path = '/home/akorre/wiki_files/en
+path = '/home/akorre/wiki_files/en'
 
 for el, article in zip(wikified_dishes, wiki):
     ids = el[1]
