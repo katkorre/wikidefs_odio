@@ -46,7 +46,7 @@ class WikiXmlHandler(xml.sax.handler.ContentHandler):
             self._pages.append((self._values['title'], self._values['id'], self._values['text']))
             #print(self._pages[-1])
 
-data_path = r"/storage/corpora/wikipedia/it/itwiki-20220420-pages-articles-multistream.xml.bz2"
+data_path = r"/storage/corpora/wikipedia/en/enwiki-20220401-pages-articles-multistream.xml.bz2
 # Object for handling xml
 handler = WikiXmlHandler()
 
@@ -118,7 +118,7 @@ clean_text_lst = [re.sub(r"<[^>]+>", "", el) for el in clean_text_lst]
 wiki = ['\n'.join(x) for x in zip(title_lst, clean_text_lst)]
 # Write texts in txt files with id as title
 
-path = '/home/akorre/wiki_files/it'
+path = '/home/akorre/wiki_files/en
 
 for el, article in zip(wikified_dishes, wiki):
     ids = el[1]
