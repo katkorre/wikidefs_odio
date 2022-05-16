@@ -70,6 +70,25 @@ for i, line in enumerate(subprocess.Popen(['bzcat'], stdin = open(data_path), st
         print("Current loop:", counter) 
 # Create title list and append only titles (element 0 of tuples in wikified_dishes)
 
+
+
+
+# Append all articles that have the strings defined in categories in wikified_dishes list 
+# the list has tuples with [0] being the title and [1] being the text
+
+wikified_dishes = []
+categories = ["Κατηγορία:Εκφοβισμός","Κατηγορία:Λογοκρισία", "Κατηγορία:Εγκλήματα μίσους"] 
+             # "Κατηγορία:Πολιτική ορθότητα", "Κατηγορία:Παρενόχληση", "Κατηγορία:Ψυχολογική κακοποιήση", 
+              #"Κατηγορία:Επιθετική συμπεριφορά", "Κατηγορία:Κακοποίηση", "Κατηγορία:Διαδικτυακός εκφοβισμός"]
+
+for x in handler._pages:
+    if any(cat in x[2] for cat in categories):
+        wikified_dishes.append(x)
+    else:
+        pass
+print(len(wikified_dishes))
+#print(wikified_dishes[26])
+
 title_lst = [el[0] for el in wikified_dishes]
 
 # Create id list and append only ids (el 1 of tuples in wikified_dishes)
