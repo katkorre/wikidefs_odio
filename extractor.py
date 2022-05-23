@@ -5,16 +5,27 @@ import numpy as np
 from datasets import load_metric
 import pandas as pd
 from operator import itemgetter
+import os
 
 
 #choose a path to get a file
-path_to_text = "/home/akorre/wiki_files/it/1081354.txt"
+path_to_text = "/home/akorre/wiki_files/it"
 
 splitter = SentenceSplitter(language='it')
+
+
+#for loop for multiple files
+for filename in os.listdir(path_to_text):
+    if filename.endswith('.txt'):
+        with open(os.path.join(path_to_text, filename)) as f:
+            f = f.read()
+            sentences = splitter.split(text=f)
+
+# single file
 #open file, sentencize and create list of sentences
-with open(path_to_text, 'r') as f:
-    f = f.read()
-    sentences = splitter.split(text=f)
+#with open(path_to_text, 'r') as f:
+    #f = f.read()
+    #sentences = splitter.split(text=f)
 
 checkpoint = 'bert-base-multilingual-cased'
 tokenizer = AutoTokenizer.from_pretrained(checkpoint)
