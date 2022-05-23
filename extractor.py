@@ -8,7 +8,7 @@ from operator import itemgetter
 
 
 #choose a path to get a file
-path_to_text = input("Enter the path to the text:\n")
+path_to_text = "/home/akorre/wiki_files/it/1081354.txt"
 
 splitter = SentenceSplitter(language='it')
 #open file, sentencize and create list of sentences
