@@ -48,8 +48,8 @@ def run(f):
 # make empty list to save output along with the namefiles
 out = []
 for filename in os.listdir(path_to_text):
-if filename.endswith('.txt'):
-  with open(os.path.join(path_to_text, filename)) as f:
+  if filename.endswith('.txt'):
+    with open(os.path.join(path_to_text, filename)) as f:
       out.append([filename,run(f)])
 print(out)
 
