@@ -10,7 +10,7 @@ import json
 
 
 # path to the files
-path_to_text = "/home/akorre/wiki_files/it"
+path_to_text = "/home/akorre/wiki_files/el"
 
 # make function to later apply to the files one-by-one
 def run(f):
