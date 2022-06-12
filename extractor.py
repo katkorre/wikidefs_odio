@@ -6,11 +6,13 @@ from datasets import load_metric
 import pandas as pd
 from operator import itemgetter
 import os
+import json
 
 
-#choose a path to get a file
+# path to the files
 path_to_text = "/home/akorre/wiki_files/it"
 
+# make function to later apply to the files one-by-one
 def run(f):
   splitter = SentenceSplitter(language='el')
   #open file, sentencize and create list of sentences
@@ -20,6 +22,7 @@ def run(f):
 
   checkpoint = 'bert-base-multilingual-cased'
   tokenizer = AutoTokenizer.from_pretrained(checkpoint)
+  # path for the saved model
   model = AutoModelForSequenceClassification.from_pretrained('/home/akorre/huggingface/it')
 
   pipe = TextClassificationPipeline(model=model, tokenizer=tokenizer, return_all_scores=True)
@@ -45,3 +48,15 @@ for filename in os.listdir(path_to_text):
     if filename.endswith('.txt'):
         with open(os.path.join(path_to_text, filename)) as f:
             print(run(f))
+
+# make empty list to save output along with the namefiles
+out = []
+for filename in os.listdir(path_to_text):
+  if filename.endswith('.txt'):
+    with open(os.path.join(path_to_text, filename)) as f:
+        out.append([filename,run(f)])
+
+# write list in txt file
+with open('/home/akorre/wikipedia_hs/gr_corpus.txt', 'w') as filehandle:
+for listitem in places:
+    filehandle.write('%s\n' % listitem)
