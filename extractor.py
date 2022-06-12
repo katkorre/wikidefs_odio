@@ -58,5 +58,5 @@ for filename in os.listdir(path_to_text):
 
 # write list in txt file
 with open('/home/akorre/wikipedia_hs/gr_corpus.txt', 'w') as filehandle:
-for listitem in places:
-    filehandle.write('%s\n' % listitem)
+  for listitem in places:
+      filehandle.write('%s\n' % listitem)
