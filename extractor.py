@@ -14,7 +14,7 @@ path_to_text = "/home/akorre/wiki_files/el"
 
 # make function to later apply to the files one-by-one
 def run(f):
-  splitter = SentenceSplitter(language='el')
+  splitter = SentenceSplitter(language='it')
   #open file, sentencize and create list of sentences
   #with open(path_to_text, 'r') as f:
   f = f.read()
