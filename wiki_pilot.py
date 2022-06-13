@@ -45,8 +45,10 @@ class WikiXmlHandler(xml.sax.handler.ContentHandler):
             self._flag = True
             self._pages.append((self._values['title'], self._values['id'], self._values['text']))
             #print(self._pages[-1])
-
-data_path = r"/storage/corpora/wikipedia/el/elwiki-20220401-pages-articles-multistream.xml.bz2"
+# greek path
+#data_path = r"/storage/corpora/wikipedia/el/elwiki-20220401-pages-articles-multistream.xml.bz2"
+# italian path
+data_path = r"/storage/corpora/wikipedia/it/itwiki-20220420-pages-articles-multistream.xml.bz2"
 # Object for handling xml
 handler = WikiXmlHandler()
 
@@ -77,10 +79,16 @@ for i, line in enumerate(subprocess.Popen(['bzcat'], stdin = open(data_path), st
 # the list has tuples with [0] being the title and [1] being the text
 
 wikified_dishes = []
-categories = ["Κατηγορία:Εκφοβισμός","Κατηγορία:Λογοκρισία", "Κατηγορία:Εγκλήματα μίσους", 
-              "Κατηγορία:Σεξισμός", "Κατηγορία:Παρενόχληση", "Κατηγορία:Ψυχολογική κακοποιήση", 
-              "Κατηγορία:", "Κατηγορία:Διαδικτυακός εκφοβισμός", "Κατηγορία:Ομοφοβία", "Κατηγορία:Φυλετικός διαχωρισμός", "Κατηγορία:Ηλικιακή διάκριση",
-              "Κατηγορία:Ρατσισμός", "Κατηγορία:Μίσος"]
+# greek categories
+#categories = ["Κατηγορία:Εκφοβισμός","Κατηγορία:Λογοκρισία", "Κατηγορία:Εγκλήματα μίσους", 
+              #"Κατηγορία:Σεξισμός", "Κατηγορία:Παρενόχληση", "Κατηγορία:Ψυχολογική κακοποιήση", 
+              #"Κατηγορία:", "Κατηγορία:Διαδικτυακός εκφοβισμός", "Κατηγορία:Ομοφοβία", "Κατηγορία:Φυλετικός διαχωρισμός", "Κατηγορία:Ηλικιακή διάκριση",
+              #"Κατηγορία:Ρατσισμός", "Κατηγορία:Μίσος"]
+
+# italian categories
+categories = ["Categoria: Reati contro la persona", "Categoria:Violenza contro le persone LGBT", "Categoria:Omofobia", 
+              "Categoria:Bullismo", "Categoria:Razzismo", "Categoria:Discriminazione e pregiudizi sessuali e di genere"]
+
 
 
 for x in handler._pages:
@@ -120,13 +128,18 @@ clean_text_lst = [re.sub(r"<[^>]+>", "", el) for el in clean_text_lst]
 wiki = ['\n'.join(x) for x in zip(title_lst, clean_text_lst)]
 # Write texts in txt files with id as title
 
-path = '/home/akorre/wiki_files/el'
+# save in greek wiki files
+#path = '/home/akorre/wiki_files/el'
+# save in italian wiki files
+path = '/home/akorre/wiki_files/it'
+
+# save in italian wiki files
 
 for el, article in zip(wikified_dishes, wiki):
     ids = el[1]
     article = article
     file = f'{ids}.txt'
-    if not any(ban in el[0] for ban in ["/", "Κατηγορία:"]): 
+    if not any(ban in el[0] for ban in ["/", "Categoria:"]): 
         with open(os.path.join(path, file), 'w+') as f:
             f.write(f'{article}')
 
